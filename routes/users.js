@@ -1,9 +1,8 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const app = express();
+const router = express.Router();
 
-app.use(express.json());
-app.use(express.static('public'));
+router.use(express.json());
+router.use(express.static('public'));
 
 
 const users = [
@@ -12,17 +11,17 @@ const users = [
 ];
 
 
-app.get('/users', (req, res) => {
+router.get('/users', (req, res) => {
     res.send(users);
 });
 
-app.get('/users/:id', (req, res) => {
+router.get('/users/:id', (req, res) => {
     const user = users.find(u => u.id === parseInt(req.params.id));
     if (!user) res.status(404).send('user not found');
     res.send(user);
 });
 
-app.post('/users/', (req, res) => {
+router.post('/users/', (req, res) => {
     const user = {
         id: users.length + 1,
         mail: req.body.mail,
@@ -34,4 +33,4 @@ app.post('/users/', (req, res) => {
     
 });
 
-app.listen(3000, () => console.log('init.....'));
+module.exports = router; 
