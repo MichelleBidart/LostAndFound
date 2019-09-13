@@ -11,22 +11,25 @@ const documents = [
 ];
 
 
-router.get(':id/documents', (req, res) => {
+router.get('/documents', (req, res) => {
+    res.send(documents);
+});
+
+router.get('/:id/documents', (req, res) => {
     const document = documents.find(d => d.userId === parseInt(req.params.id));
     if (!document) res.status(404).send('You dont have any document in our system');
     res.send(document);
 });
 
-/*router.post('/', (req, res) => {
-    const user = {
-        id: documents.length + 1,
-        mail: req.body.mail,
-        password: req.body.password,
+router.post('/:id/documents', (req, res) => {
+    const document = {
+        userId: req.body.userId,
+        documentNumber: req.body.documentNumber,
+        isLost: req.body.isLost,
     }
 
-    documents.push(user);
-    res.send(user);
-
-});*/
+    documents.push(document);
+    res.send(document);
+});
 
 module.exports = router; 
