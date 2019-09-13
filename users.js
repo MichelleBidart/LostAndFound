@@ -5,7 +5,6 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
-mongoose.con
 
 const users = [
     { id: 1, mail: 'bidart.michelle@gmail.com', password: '1234' },
