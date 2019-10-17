@@ -21,7 +21,7 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);
 
-//validates de inputs are correct
+//validates that the inputs are correct 
 function validateUser(user){
 	const schema = {
 		// added email to ask if it´s a valid email

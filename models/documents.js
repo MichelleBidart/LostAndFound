@@ -29,7 +29,7 @@ const documentSchema = new Schema({
     	default : Date.now,
     },
     documentType: {type : String}
-}, { versionKey: false });
+});
 
 // I´ll pass the model, in this case Document, with the schema.
 const Document = mongoose.model('Document', documentSchema);

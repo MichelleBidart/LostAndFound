@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 /*
+CRUD users
 Uses promises to improve readability
 */
 

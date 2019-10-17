@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Document = require('../models/documents');
 const {User} = require('../models/user');
+/*
+CRUD of documents, this is associeted to the User
+*/
 
 
 router.get('/:id/documents', async (req, res) => {
