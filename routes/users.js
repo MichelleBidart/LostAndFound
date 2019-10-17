@@ -1,34 +1,44 @@
+const mongoose = require('mongoose');
+let {User} = require('../models/user');
 const express = require('express');
 const router = express.Router();
 
-router.use(express.json());
-router.use(express.static('public'));
+/*
+Uses promises to improve readability
+*/
 
 
-const users = [
-    { id: 1, mail: 'bidart.michelle@gmail.com', password: '1234'},
-    { id: 2, mail: 'martinbrude@gmail.com', password: '45678'},
-];
+//gets all users
 
-
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    const users = await User.find();
     res.send(users);
 });
 
-router.get('/:id', (req, res) => {
-    const user = users.find(u => u.id === parseInt(req.params.id));
-    if (!user) res.status(404).send('user not found');
-    res.send(user);
+// get user by id
+router.get('/:id', async (req, res) => {
+    const users = await User.findById(req.params.id)
+    .catch(err => console.error("err", err));
+    if (!users) res.status(404).send('user not found');
+    res.send(users);
 });
 
-router.post('/', (req, res) => {
-    const user = {
-        id: users.length + 1,
-        mail: req.body.mail,
-        password: req.body.password,
-    }
+//deletes user by id
+router.delete('/:id', async (req, res) => {
+    const users = await User.findByIdAndRemove(req.params.id)
+    .catch(err => console.error("err", err));
+    if (!users) res.status(404).send('user not found');
+    res.send(users);
+});
 
-    users.push(user);
+
+// post one user
+router.post('/', async (req, res) => {
+    let user = new User ({
+        email: req.body.email,
+        password: req.body.password,
+    });
+    user = await user.save();
     res.send(user);
     
 });

@@ -1,34 +1,31 @@
 const express = require('express');
 const router = express.Router();
-
-router.use(express.json());
-router.use(express.static('public'));
-
-
-const documents = [
-    { userId: 1, documentNumber: '34098491' , isLost: true },
-    { userId: 2, documentNumber: '34598491', isLost: false },
-];
+const Document = require('../models/documents');
+const {User} = require('../models/user');
 
 
-router.get('/documents', (req, res) => {
-    res.send(documents);
-});
+router.get('/:id/documents', async (req, res) => {
+    const users = await User.findById(req.params.id);
+    if (!users) res.status(404).send('You dont have any document for this user');
 
-router.get('/:id/documents', (req, res) => {
-    const document = documents.find(d => d.userId === parseInt(req.params.id));
-    if (!document) res.status(404).send('You dont have any document in our system');
+    document = await Document.find().populate('user');
     res.send(document);
 });
 
-router.post('/:id/documents', (req, res) => {
-    const document = {
-        userId: req.body.userId,
-        documentNumber: req.body.documentNumber,
-        isLost: req.body.isLost,
-    }
+router.post('/:id/documents', async (req, res) => {
 
-    documents.push(document);
+    const user = await User.findById(req.params.id);
+    if (!user) res.status(404).send('You dont have any document for this user');
+
+    let document = new Document ({
+        documentNumber: req.body.documentNumber,
+        user : req.params.id,
+        isLost: req.body.isLost,
+        date: req.body.date,
+        documentType: req.body.documentType        
+    });
+
+    document = await document.save();
     res.send(document);
 });
 
