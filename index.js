@@ -4,6 +4,8 @@ const documents = require('./routes/documents');
 const auth = require('./routes/auth');
 const app = express();
 const mongoose = require('mongoose');
+const config = require('config');
+
 
 //middleware for routes
 app.use(express.json());
@@ -11,6 +13,11 @@ app.use('/users', users);//CRUD user
 app.use('/users', documents); //generates the documents
 app.use('/auth',auth);//login 
 
+
+if (!config.get('jwtKey')) {
+	console.error('Fatal error: jwt error');
+	process.exit(1);//exit the process 
+}
 
 /** I use promisses to conncet to the DB, if it´s fullfil then I´m connected, if not 
 I cath the exception. 

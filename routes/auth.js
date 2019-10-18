@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const config = require('config');
 const {User, validate} = require('../models/user');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
 
 /*
 This is the Login, authenticates the user.
@@ -30,8 +32,9 @@ router.post('/', async (req, res) => {
     /*the first parameter is the payload of the json web token. 
     The second parameter is a private key
     */
-    const token = jwt.sign({_id: user._id},'jwtKey');
+    const token = jwt.sign({_id: user._id},config.get('jwtKey'));
 
+    // I´ll return the token to the user
     res.send(token);
     
 });
