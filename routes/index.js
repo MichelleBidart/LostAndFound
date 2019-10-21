@@ -10,15 +10,25 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 
-
-//middleware for routes
+//middleware 
+//understands json
 router.use(express.json());
+//to parse a body from a form. If we don´t use this, express doesn´t send the data in the body  
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
 router.use(express.static(path.join(__dirname, 'public')));
+
+
+//middleware for routes
 router.use('/users', users);//CRUD user
 router.use('/users', documents); //generates the documents
 router.use('/',auth);//login 
+
+
+//send it to the view register
+router.get('/register', (req,res) => {
+    res.render('register');
+});
 
 
 if (!config.get('jwtKey')) {

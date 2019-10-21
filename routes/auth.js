@@ -19,8 +19,8 @@ router.get('/', (req,res) => {
 
 
 router.post('/', async (req, res) => {
-    console.log(req); 
-
+    console.log("POST -- Auth / Login");
+    console.log("req.body");
     //validates the inputs  
     const {error} = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
