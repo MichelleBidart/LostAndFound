@@ -12,7 +12,15 @@ Uses bcryp to compare a text password with a hashed one in the DB.
 when bcrypt compares the password, in some place adds the salt.
 */
 
+router.get('/', (req,res) => {
+    res.render('auth');
+});
+
+
+
 router.post('/', async (req, res) => {
+    console.log(req); 
+
     //validates the inputs  
     const {error} = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -28,6 +36,7 @@ router.post('/', async (req, res) => {
     const token = user.generateAuthToken();
     // I´ll return the token to the user
     res.send(token);
+    //res.res
     
 });
 

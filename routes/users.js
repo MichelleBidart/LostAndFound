@@ -10,7 +10,6 @@ Uses promises to improve readability
 
 
 //gets all users
-
 router.get('/', async (req, res) => {
     const users = await User.find();
     res.send(users);
