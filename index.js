@@ -14,6 +14,10 @@ app.use('/users', documents); //generates the documents
 app.use('/auth',auth);//login 
 
 
+//views
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
 if (!config.get('jwtKey')) {
 	console.error('Fatal error: jwt error');
 	process.exit(1);//exit the process 

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const config = require('config');
 const {User, validate} = require('../models/user');
 const express = require('express');
 const router = express.Router();
@@ -11,10 +10,7 @@ const jwt = require('jsonwebtoken');
 This is the Login, authenticates the user.
 Uses bcryp to compare a text password with a hashed one in the DB.  
 when bcrypt compares the password, in some place adds the salt.
-It also uses jsonwebtoken thats basically a string that the server sends to the user to identify him. 
 */
-
-
 
 router.post('/', async (req, res) => {
     //validates the inputs  
@@ -29,11 +25,7 @@ router.post('/', async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Invalid email or password');
 
-    /*the first parameter is the payload of the json web token. 
-    The second parameter is a private key
-    */
-    const token = jwt.sign({_id: user._id},config.get('jwtKey'));
-
+    const token = user.generateAuthToken();
     // I´ll return the token to the user
     res.send(token);
     
