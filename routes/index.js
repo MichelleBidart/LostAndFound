@@ -8,6 +8,8 @@ const config = require('config');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const middlewareAuth = require('../middleware/auth');
+
 
 
 //middleware 
@@ -30,8 +32,9 @@ router.get('/register', (req,res) => {
     res.render('register');
 });
 
-router.get('/documental', (req,res) => {
-    res.render('documents');
+router.get('/documental',  (req,res) => {
+	console.log('donde llega primero');
+    res.render('documents', {_id: req.user_id});
 });
 
 

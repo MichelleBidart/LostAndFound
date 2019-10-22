@@ -18,6 +18,8 @@ router.get('/:id/documents', async (req, res) => {
 
 router.post('/:id/documents', async (req, res) => {
 
+    console.log('llega');
+
     const user = await User.findById(req.params.id);
     if (!user) res.status(404).send('You dont have any document for this user');
 
