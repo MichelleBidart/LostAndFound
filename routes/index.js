@@ -30,6 +30,10 @@ router.get('/register', (req,res) => {
     res.render('register');
 });
 
+router.get('/documental', (req,res) => {
+    res.render('documents');
+});
+
 
 if (!config.get('jwtKey')) {
 	console.error('Fatal error: jwt error');

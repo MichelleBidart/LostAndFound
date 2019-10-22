@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const config = require('config');
 
 
 /*
@@ -15,7 +16,6 @@ when bcrypt compares the password, in some place adds the salt.
 router.get('/', (req,res) => {
     res.render('auth');
 });
-
 
 
 router.post('/', async (req, res) => {
@@ -35,8 +35,11 @@ router.post('/', async (req, res) => {
 
     const token = user.generateAuthToken();
     // I´ll return the token to the user
-    res.send(token);
-    //res.res
+    //res.(user._id);
+
+    //sync
+     res.header('x-auth-token',  token).redirect('/documental');
+   //res.res
     
 });
 
