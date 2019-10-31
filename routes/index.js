@@ -10,8 +10,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const middlewareAuth = require('../middleware/auth');
 
-
-
 //middleware 
 //understands json
 router.use(express.json());
@@ -46,7 +44,8 @@ if (!config.get('jwtKey')) {
 /** I use promisses to conncet to the DB, if it´s fullfil then I´m connected, if not 
 I cath the exception. 
 **/
-mongoose.connect('mongodb://localhost:27017/laf')
+mongoose.set('useCreateIndex', true);
+mongoose.connect('mongodb://localhost:27017/laf', { useNewUrlParser: true })
 .then( () => console.log('Conected to MongoDB '))
 .catch(err => console.error('Could not connect to mongo DB', err));
 
