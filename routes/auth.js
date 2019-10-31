@@ -34,15 +34,17 @@ router.post('/', async (req, res) => {
     if (!validPassword) return res.status(400).send('Invalid email or password');
 
     const token = user.generateAuthToken();
+    console.log("TOKENNNNNNNN");
+    console.log(token);
     // I´ll return the token to the user
     //res.(user._id);
 
    //sync
      //res.redirect('/documental?token:'+ token);
-    const id = user._id 
+    const id = user._id; 
      res.render('documents', {id});
    //res.res
      
 });
-
+//session storage
 module.exports = router; 
