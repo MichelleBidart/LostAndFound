@@ -22,7 +22,8 @@ const documentSchema = new Schema({
     },
     isLost: {
     	type: Boolean,
-    	required: true
+        default: true,
+    	//required: true
     },
     date: {
     	type: Date, 
