@@ -5,7 +5,6 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const middlewareAuth = require('../middleware/auth');
 
-
 /*
 CRUD users
 Uses promises to improve readability
@@ -57,5 +56,6 @@ router.post('/', async (req, res) => {
     const token = user.generateAuthToken();
     res.header('x-auth-token',  token).send(user);
 });
+
 
 module.exports = router; 

@@ -6,7 +6,7 @@ function auth(req, res, next){
 	const token = req.cookies.auth;
 	console.log('token middleware');
 	console.log(token);
-	if (!token) return res.status(401).send('Access denied . No token provided ');
+	if (!token) return res.status(401).send('Access denied. No token provided.');
 
 	try{
 		const decoded = jwt.verify(token, 'jwtKey');	

@@ -31,7 +31,7 @@ router.get('/register', (req,res) => {
 });
 
 router.get('/documental', middlewareAuth,  (req,res) => {
-	const id = req.user_id;
+    const id = req.user_id;
     res.render('documents', {id});
 });
 
