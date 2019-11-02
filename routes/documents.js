@@ -18,7 +18,6 @@ router.get('/:id/documents', auth ,async (req, res) => {
 
     //document = await Document.find('user:user')
     documents = await Document.find({user:user}).populate('user');
-    console.log(documents);
    // res.send(document);
    res.render('index', {
                             documents:documents,
@@ -54,14 +53,9 @@ router.post('/:id/documents', auth ,async (req, res) => {
                 //if there is a match, notify
                 if (doc.isLost) {
                     console.log('doc was reported as lost.');
-                    User.findOne({ '': req.body.documentNumber, 'isLost' : !document.isLost}, 
-                    function (err, doc) {
-                        if (!err && doc) {
-                            notifyFoundDocument(user.email);
-                        } else {
-                            console.log('error');//TODO: redirect to proper view. 
-                        }
-                    });
+                    console.log(doc.user.email);
+                    notifyFoundDocument(doc.user.email);
+                    
                 } else {
                     console.log('doc was reported as found.');
                 }

@@ -21,8 +21,7 @@ const documentSchema = new Schema({
     	type: String,
     	required: true, 
         minlength : DOCUMENT_MIN_LENGTH,
-        maxlength : DOCUMENT_MAX_LENGTH,
-        unique : true
+        maxlength : DOCUMENT_MAX_LENGTH
     },
     user :{
     	type : mongoose.Schema.Types.ObjectId,
