@@ -11,3 +11,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 app.listen(3000, () => console.log('init.....'));
+
+const localtunnel = require('localtunnel');
+
+(async () => {
+  const tunnel = await localtunnel({ port: 3000, subdomain: 'lostandfound' });
+  
+  console.log(tunnel.url);
+
+  tunnel.on('close', () => {
+    // tunnels are closed
+    console.log('tunnel closed');
+  });
+})();
+
+//tunnel.close();
