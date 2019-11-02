@@ -18,7 +18,7 @@ router.get('/', middlewareAuth ,async (req, res) => {
 });
 
 // get user by id
-router.get('/:id', async (req, res) => {
+router.get('/:id',middlewareAuth ,async (req, res) => {
     const users = await User.findById(req.params.id)
     .catch(err => console.error("err", err));
     if (!users) res.status(404).send('user not found');
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 });
 
 //delets user by id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',middlewareAuth ,async (req, res) => {
     const users = await User.findByIdAndRemove(req.params.id)
     .catch(err => console.error("err", err));
     if (!users) res.status(404).send('User not found');
@@ -35,7 +35,7 @@ router.delete('/:id', async (req, res) => {
 
 
 // create user
-router.post('/', async (req, res) => {
+router.post('/', middlewareAuth ,async (req, res) => {
     console.log('PUT --CREATE USER');
     console.log(req.body);
     const {error} = validate(req.body);

@@ -23,7 +23,7 @@ const documentSchema = new Schema({
     isLost: {
     	type: Boolean,
         default: true,
-    	//required: true
+    	required: true
     },
     date: {
     	type: Date, 

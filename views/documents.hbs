@@ -6,11 +6,18 @@
             <label for="documentNumber">Document number:</label>
             <input type="text" class="form-control" id="documentNumber" name="documentNumber"/>
         </div>
-        <div class="form-group">
-            <label for="documentType">Tipo de documento: </label>
-            <select class="form-control">
+        <div class="form-group" >
+            <label for="documentType"> Document type: </label>
+            <select class="form-control" name="documentType">
                 <option value="DNI">DNI</option>
                 <option value="PASAPORTE">PASAPORTE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="lostOrFound">Lost or found: </label>
+            <select class="form-control" name="lostOrFound">
+                <option value="LOST">Lost</option>
+                <option value="FOUND">Found</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>

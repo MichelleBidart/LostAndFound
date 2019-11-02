@@ -1,0 +1,25 @@
+<div class="container">      
+    <div class="row">
+    <br>
+    <a href="/persona/nuevo" class="btn btn-primary">New</a>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Document type</th>
+            <th>Document Number</th>
+            <th>Action</th>
+            <th colspan="2">Operation</th>
+        </tr>
+        </thead>
+        {{#each documents}}
+          <tr>
+            <td>{{this.documentType}}</td> 
+            <td>{{this.documentNumber}}</td>
+            <td>{{this.isLost}}</td>
+            <td><a href="/persona/modificar/{{this._id}}">Change</a></td> 
+            <td><a href="/persona/eliminar/{{this._id}}">Delete</a></td> 
+          </tr>          
+       {{/each}}   
+      </table>
+    </div>
+</div>
