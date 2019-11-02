@@ -8,7 +8,7 @@ CRUD of documents, this is associeted to the User
 */
 
 
-router.get('/:id/documents', async (req, res) => {
+router.get('/:id/documents', auth ,async (req, res) => {
     const users = await User.findById(req.params.id);
     if (!users) res.status(404).send('You dont have any document for this user');
 

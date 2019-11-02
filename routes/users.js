@@ -3,6 +3,7 @@ const {User, validate} = require('../models/user');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const middlewareAuth = require('../middleware/auth');
 
 
 /*
@@ -11,7 +12,7 @@ Uses promises to improve readability
 */
 
 //gets all users
-router.get('/', async (req, res) => {
+router.get('/', middlewareAuth ,async (req, res) => {
     const users = await User.find();
     res.send(users);
 });

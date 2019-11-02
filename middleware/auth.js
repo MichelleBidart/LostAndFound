@@ -9,8 +9,7 @@ function auth(req, res, next){
 	if (!token) return res.status(401).send('Access denied . No token provided ');
 
 	try{
-		const decoded = jwt.verify(token, 'jwtKey');
-
+		const decoded = jwt.verify(token, 'jwtKey');	
 		req.user_id = decoded._id;
 		next();
 	}catch(ex){
