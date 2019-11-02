@@ -5,6 +5,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const util = require('util');
 
 
 /*
@@ -35,10 +36,8 @@ router.post('/', async (req, res) => {
 
     const token = user.generateAuthToken();
     const id = user._id; 
-    //res.render('documents', {id});
     res.cookie('auth',token);
-
-    res.redirect('/documental');
+    res.redirect(util.format('/users/%s/documents', id));
      
 });
 //session storage

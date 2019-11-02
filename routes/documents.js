@@ -11,8 +11,9 @@ router.get('/:id/documents', auth ,async (req, res) => {
     const users = await User.findById(req.params.id);
     if (!users) res.status(404).send('You dont have any document for this user');
 
-    document = await Document.find().populate('user');
-    res.send(document);
+    documents = await Document.find().populate('user');
+   // res.send(document);
+   res.render('index', {documents:documents});
 });
 
 

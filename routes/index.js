@@ -9,7 +9,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const middlewareAuth = require('../middleware/auth');
-
+const util = require('util');
 //middleware 
 //understands json
 router.use(express.json());
@@ -29,6 +29,7 @@ router.use('/',auth);//login
 router.get('/register', (req,res) => {
     res.render('register');
 });
+
 
 //show the create list
 router.get('/documental', middlewareAuth,  (req,res) => {
