@@ -10,11 +10,19 @@ when it he choose the lost document option.
 /*
 Uses reference to persist one to many relationship with User. 
 Example: https://vegibit.com/mongoose-relationships-tutorial/
+
 */
+
+const DOCUMENT_MAX_LENGTH = 12;
+const DOCUMENT_MIN_LENGTH = 5;
+
 const documentSchema = new Schema({
     documentNumber: { 
     	type: String,
-    	required: true 
+    	required: true, 
+        minlength : DOCUMENT_MIN_LENGTH,
+        maxlength : DOCUMENT_MAX_LENGTH,
+        unique : true
     },
     user :{
     	type : mongoose.Schema.Types.ObjectId,
@@ -22,14 +30,16 @@ const documentSchema = new Schema({
     },
     isLost: {
     	type: Boolean,
-        default: true,
     	required: true
     },
     date: {
     	type: Date, 
     	default : Date.now,
     },
-    documentType: {type : String}
+    documentType: {
+        type : String,
+        required : true
+    }
 });
 
 // I´ll pass the model, in this case Document, with the schema.

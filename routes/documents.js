@@ -13,12 +13,18 @@ CRUD of documents, this is associeted to the User
 */
 
 router.get('/:id/documents', auth ,async (req, res) => {
-    const users = await User.findById(req.params.id);
-    if (!users) res.status(404).send('You dont have any document for this user');
+    const user = await User.findById(req.params.id);
+    if (!user) res.status(404).send('You dont have any document for this user');
 
-    documents = await Document.find().populate('user');
+    //document = await Document.find('user:user')
+    documents = await Document.find({user:user}).populate('user');
+    console.log(documents);
    // res.send(document);
-   res.render('index', {documents:documents});
+   res.render('index', {
+                            documents:documents,
+                            user:user
+                        }
+                    );
 });
 
 router.post('/:id/documents', auth ,async (req, res) => {
@@ -34,7 +40,8 @@ router.post('/:id/documents', auth ,async (req, res) => {
     });
 
     document = await document.save();
-    res.send(document);
+
+    //res.send(document);
     //If it's already reported, notify. 
     console.log('search document');
 
@@ -42,7 +49,7 @@ router.post('/:id/documents', auth ,async (req, res) => {
                             'isLost' : !document.isLost}, function (err, doc) {
 
             if (!err && doc) {
-                console.log(doc);
+                console.log('document' + doc);
                 console.log('document found.');
                 //if there is a match, notify
                 if (doc.isLost) {
@@ -52,7 +59,7 @@ router.post('/:id/documents', auth ,async (req, res) => {
                         if (!err && doc) {
                             notifyFoundDocument(user.email);
                         } else {
-                            //TODO: redirect to proper view. 
+                            console.log('error');//TODO: redirect to proper view. 
                         }
                     });
                 } else {
@@ -62,6 +69,8 @@ router.post('/:id/documents', auth ,async (req, res) => {
                 console.log('document not found.');
             }
     });
+
+    res.redirect(util.format('/users/%s/documents', user._id));
 });
 
 function notifyFoundDocument(usermail){

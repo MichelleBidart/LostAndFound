@@ -1,8 +1,12 @@
 <div class="container">      
     <div class="row">
     <br>
-    <a href="/persona/nuevo" class="btn btn-primary">New</a>
-      <table class="table table-striped">
+   <!-- <form  action="/users/{{this.user._id}}/documents/"  method="GET" > 
+        <button type="submit" class="btn btn-primary">New</button>
+    </form>-->
+  
+    <td><a href="/documental">New</a></td> 
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>Document type</th>
@@ -16,7 +20,7 @@
             <td>{{this.documentType}}</td> 
             <td>{{this.documentNumber}}</td>
             <td>{{this.isLost}}</td>
-            <td><a href="/persona/modificar/{{this._id}}">Change</a></td> 
+            <td><a href="/:id/documents/{{this._id}}">Change</a></td> 
             <td><a href="/persona/eliminar/{{this._id}}">Delete</a></td> 
           </tr>          
        {{/each}}   

@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const middlewareAuth = require('../middleware/auth');
+const util = require('util');
 
 /*
 CRUD users
@@ -11,7 +12,7 @@ Uses promises to improve readability
 */
 
 //gets all users
-router.get('/', middlewareAuth ,async (req, res) => {
+router.get('/', middlewareAuth ,async (req, reqes) => {
     const users = await User.find();
     res.send(users);
 });
@@ -34,8 +35,8 @@ router.delete('/:id',middlewareAuth ,async (req, res) => {
 
 
 // create user
-router.post('/', middlewareAuth ,async (req, res) => {
-    console.log('PUT --CREATE USER');
+router.post('/' ,async (req, res) => {
+    console.log('POST --CREATE USER');
     console.log(req.body);
     const {error} = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -54,7 +55,9 @@ router.post('/', middlewareAuth ,async (req, res) => {
     user = await user.save();
 
     const token = user.generateAuthToken();
-    res.header('x-auth-token',  token).send(user);
+    res.cookie('auth',token);
+    res.redirect(util.format('/users/%s/documents', user._id));
+
 });
 
 

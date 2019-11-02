@@ -4,7 +4,7 @@
     <form action="/users/{{id}}/documents" method="POST">
         <div class="form-group">
             <label for="documentNumber">Document number:</label>
-            <input type="text" class="form-control" id="documentNumber" name="documentNumber"/>
+            <input type="text" class="form-control" id="documentNumber" name="documentNumber" minlength="5" maxlength="12" />
         </div>
         <div class="form-group" >
             <label for="documentType"> Document type: </label>
