@@ -33,7 +33,7 @@ router.get('/register', (req,res) => {
 
 //show the create list
 router.get('/documental', middlewareAuth,  (req,res) => {
-	const id = req.user._id;
+	const id = req.user_id;
     res.render('documents', {id});
 });
 
