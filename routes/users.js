@@ -27,10 +27,11 @@ router.get('/:id',middlewareAuth ,async (req, res) => {
 
 //delets user by id
 router.delete('/:id',middlewareAuth ,async (req, res) => {
+    console.log('llega a delete');
     const users = await User.findByIdAndRemove(req.params.id)
     .catch(err => console.error("err", err));
     if (!users) res.status(404).send('User not found');
-    res.send(users);
+    res.redirect(util.format('/users/%s/documents', user._id));
 });
 
 

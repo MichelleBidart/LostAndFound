@@ -26,6 +26,18 @@ router.get('/:id/documents', auth ,async (req, res) => {
                     );
 });
 
+router.get('/:userId/documents/:documentId', auth ,async (req, res) => {
+    console.log('delete document user id' + req.params.userId);
+    const user = await User.findById(req.params.userId);
+    if (!user) res.status(404).send('You dont have any document for this user to delete');
+    console.log('delete document user id' + req.params.documentId);
+    const document = await Document.findByIdAndRemove(req.params.documentId)
+    .catch(err => console.error("err", err));
+
+    res.redirect(util.format('/users/%s/documents', user._id));
+
+});
+
 router.post('/:id/documents', auth ,async (req, res) => {
     const user = await User.findById(req.params.id);
     if (!user) res.status(404).send('You dont have any document for this user');
@@ -55,7 +67,6 @@ router.post('/:id/documents', auth ,async (req, res) => {
                     console.log('doc was reported as lost.');
                     console.log(doc.user.email);
                     notifyFoundDocument(doc.user.email);
-                    
                 } else {
                     console.log('doc was reported as found.');
                 }
