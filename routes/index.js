@@ -30,9 +30,9 @@ router.get('/register', (req,res) => {
     res.render('register');
 });
 
-router.get('/documental',  (req,res) => {
-	console.log('donde llega primero');
-    res.render('documents', {_id: req.user_id});
+router.get('/documental', middlewareAuth,  (req,res) => {
+	const id = req.user_id;
+    res.render('documents', {id});
 });
 
 
