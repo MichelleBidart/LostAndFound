@@ -5,6 +5,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const util = require('util');
 
 /*
 This is the Login, authenticates the user.
@@ -39,10 +40,8 @@ router.post('/', async (req, res) => {
    //sync
      //res.redirect('/documental?token:'+ token);
     const id = user._id; 
-    //res.render('documents', {id});
     res.cookie('auth',token);
-
-    res.redirect('/documental');
+    res.redirect(util.format('/users/%s/documents', id));
      
 });
 

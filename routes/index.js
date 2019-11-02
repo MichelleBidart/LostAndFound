@@ -9,7 +9,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const middlewareAuth = require('../middleware/auth');
-
+const util = require('util');
 //middleware 
 //understands json
 router.use(express.json());
@@ -30,21 +30,25 @@ router.get('/register', (req,res) => {
     res.render('register');
 });
 
+
+//show the create list
 router.get('/documental', middlewareAuth,  (req,res) => {
     const id = req.user_id;
     res.render('documents', {id});
 });
-
 
 if (!config.get('jwtKey')) {
 	console.error('Fatal error: jwt error');
 	process.exit(1);//exit the process 
 }
 
+//added this to avoid message errors in start up
+mongoose.set('useCreateIndex', true);
+
 /** I use promisses to conncet to the DB, if it´s fullfil then I´m connected, if not 
 I cath the exception. 
 **/
-mongoose.set('useCreateIndex', true);
+
 mongoose.connect('mongodb://localhost:27017/laf', { useNewUrlParser: true })
 .then( () => console.log('Conected to MongoDB '))
 .catch(err => console.error('Could not connect to mongo DB', err));
