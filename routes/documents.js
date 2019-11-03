@@ -63,11 +63,18 @@ router.post('/:id/documents', auth ,async (req, res) => {
                                 console.log('doc was reported as lost.');
                                 User.findOne({ '_id': doc.user._id}, function (err, alterUser) {                                 
                                     // Grab the the current loggued user email from db. 
-                                    User.findOne({ '_id': req.user_id}, function (err, user) { 
-                                        notifyFoundDocument(alterUser.email, user.email)
+                                    User.findOne({ '_id': req.user_id}, function (err, currentUser) { 
+                                        notifyFoundDocument(alterUser.email, currentUser.email);
                                     });
                                 });
                               } else {
+                                console.log('doc was reported as found.');
+                                User.findOne({ '_id': doc.user._id}, function (err, alterUser) {                                 
+                                    // Grab the the current loggued user email from db. 
+                                    User.findOne({ '_id': req.user_id}, function (err, currentUser) { 
+                                        notifyFoundDocument(currentUser.email, alterUser.email);
+                                    });
+                                });
                               }
     });
 
@@ -94,14 +101,14 @@ function notifyFoundDocument(destinationEmail, alterEmail){
       });
   
       var htmlBody = '<p><b>Hola!</b></p>' +
-      '<p>Tu DNI fue encontrado!</p>' +
+      '<p>Tu documento fue encontrado!</p>' +
       '<p>Podés enviar un mail a %s para recuperarlo. </p>'
   
       // setup email data with unicode symbols
       let mailOptions = {
           from: 'lost.and.found.up@gmail.com',
           to: destinationEmail,
-          subject: 'Tu DNI fue encontrado',
+          subject: 'Tu documento fue encontrado',
           text: 'Hola!',
           html: util.format(htmlBody, alterEmail)
       };

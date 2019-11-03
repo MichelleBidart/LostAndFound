@@ -17,7 +17,7 @@ const localtunnel = require('localtunnel');
 (async () => {
   const tunnel = await localtunnel({ port: 3000, subdomain: 'lostandfound' });
   
-  console.log(tunnel.url);
+  console.log(tunnel.url); 
 
   tunnel.on('close', () => {
     // tunnels are closed
