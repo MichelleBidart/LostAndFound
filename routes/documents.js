@@ -52,7 +52,6 @@ router.post('/:id/documents', auth ,async (req, res) => {
 
     document = await document.save();
 
-    //res.send(document);
     //If it's already reported, notify. 
     console.log('search document');
 
@@ -62,20 +61,14 @@ router.post('/:id/documents', auth ,async (req, res) => {
                                 console.log('document found' + doc);
                               if (doc.isLost)  {
                                 console.log('doc was reported as lost.');
-
-                                console.log('the user binded to the user is' + doc.user);
-                                console.log('the user id is ' + doc.user._id);
-                                User.findOne({ '_id': doc.user._id}, function (err, alterUser) { 
-                                console.log("Alter user: " + alterUser);
-                                console.log("Alter user email: " + alterUser.email);
-                                notifyFoundDocument(alterUser.email);
+                                User.findOne({ '_id': doc.user._id}, function (err, alterUser) {                                 
+                                    // Grab the the current loggued user email from db. 
+                                    User.findOne({ '_id': req.user_id}, function (err, user) { 
+                                        notifyFoundDocument(alterUser.email, user.email)
+                                    });
                                 });
-
                               } else {
-                                console.log('doc was reported found');
                               }
-                                
-                                
     });
 
     res.redirect(util.format('/users/%s/documents', user._id));
@@ -89,14 +82,11 @@ function notifyFoundDocument(destinationEmail, alterEmail){
     let transporter = nodemailer.createTransport({
         sendmail: true,
         host: 'mail.smtp.gmail.com',
-        //host: 'smtp.ethereal.email',
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
             user: 'lost.and.found.up@gmail.com',
             pass: 'Gorriti3758'
-            //user: 'nico.kilback@ethereal.email',
-            //pass: 'dF9kRev7XyARAzuKYG'
         },
         tls:{
           rejectUnauthorized:false
@@ -110,7 +100,7 @@ function notifyFoundDocument(destinationEmail, alterEmail){
       // setup email data with unicode symbols
       let mailOptions = {
           from: 'lost.and.found.up@gmail.com',
-          to: usermail,
+          to: destinationEmail,
           subject: 'Tu DNI fue encontrado',
           text: 'Hola!',
           html: util.format(htmlBody, alterEmail)
