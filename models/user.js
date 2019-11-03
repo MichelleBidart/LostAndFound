@@ -10,7 +10,6 @@ const  MAIL_MIN_LENGTH = 5;
 const  PASS_MAX_LENGTH = 1024;
 const  PASS_MIN_LENGTH = 5;
 
-
 const userSchema = new Schema({
     email:{
       type: String,
@@ -23,8 +22,7 @@ const userSchema = new Schema({
       type: String,
       required: true,
       maxlength: PASS_MAX_LENGTH,
-      minlength: PASS_MIN_LENGTH,
- 
+      minlength: PASS_MIN_LENGTH
     }
  });
 
