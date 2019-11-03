@@ -62,10 +62,7 @@ router.post('/:id/documents', auth ,async (req, res) => {
                                 console.log('document found' + doc);
                               if (doc.isLost)  {
                                 console.log('doc was reported as lost.');
-                              } else {
-                                console.log('doc was reported found');
-                              }
-                                
+
                                 console.log('the user binded to the user is' + doc.user);
                                 console.log('the user id is ' + doc.user._id);
                                 User.findOne({ '_id': doc.user._id}, function (err, alterUser) { 
@@ -73,56 +70,61 @@ router.post('/:id/documents', auth ,async (req, res) => {
                                 console.log("Alter user email: " + alterUser.email);
                                 notifyFoundDocument(alterUser.email);
                                 });
+
+                              } else {
+                                console.log('doc was reported found');
+                              }
+                                
                                 
     });
 
     res.redirect(util.format('/users/%s/documents', user._id));
 });
 
-function notifyFoundDocument(usermail){
+function notifyFoundDocument(destinationEmail, alterEmail){
+    if (!destinationEmail) { return; }
+    console.log('usermail '+ destinationEmail);
 
-    console.log('usermail '+usermail);
-    if (usermail == undefined) {
-        return;
-    }
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-      sendmail: true,
-      //host: 'mail.smtp.gmail.com',
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-          //user: 'lost.and.found.up@gmail.com',
-          //pass: 'Gorriti3758'
-          user: 'nico.kilback@ethereal.email',
-          pass: 'dF9kRev7XyARAzuKYG'
-      },
-      tls:{
-        rejectUnauthorized:false
-      }
-    });
-
-    var htmlBody = '<p><b>Hola!</b></p>' +
-    '<p>Tu DNI fue encontrado!</p>' +
-    '<p>Podés enviar un mail a %s para recuperarlo. </p>'
-
-    // setup email data with unicode symbols
-    let mailOptions = {
-        from: 'lost.and.found.up@gmail.com', // sender address
-        to: 'Martín Brude <martin.brude@gmail.com>', // comma separated list of recipients
-        //bcc: 'Michelle Bidart <bidart.michelle@gmail.com>',
-        subject: 'Tu DNI fue encontrado', // Subject line
-        text: 'Hola!', // plain text body
-        html: util.format(htmlBody, usermail)
-    };
-  
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
+        sendmail: true,
+        host: 'mail.smtp.gmail.com',
+        //host: 'smtp.ethereal.email',
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: 'lost.and.found.up@gmail.com',
+            pass: 'Gorriti3758'
+            //user: 'nico.kilback@ethereal.email',
+            //pass: 'dF9kRev7XyARAzuKYG'
+        },
+        tls:{
+          rejectUnauthorized:false
         }
-        console.log('Message sent: %s', info.response);   
-    });
+      });
+  
+      var htmlBody = '<p><b>Hola!</b></p>' +
+      '<p>Tu DNI fue encontrado!</p>' +
+      '<p>Podés enviar un mail a %s para recuperarlo. </p>'
+  
+      // setup email data with unicode symbols
+      let mailOptions = {
+          from: 'lost.and.found.up@gmail.com',
+          to: usermail,
+          subject: 'Tu DNI fue encontrado',
+          text: 'Hola!',
+          html: util.format(htmlBody, alterEmail)
+      };
+    
+      // send mail with defined transport object
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return console.log(error);
+          }
+          console.log('Message sent: %s', info.response);   
+          console.log('Message id: %s', info.messageId);
+          console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+      });
+    //});
 }
 module.exports = router; 
