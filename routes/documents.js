@@ -60,16 +60,20 @@ router.post('/:id/documents', auth ,async (req, res) => {
                             'isLost' : !document.isLost}, function (err, doc) {
                                 if (err || doc == undefined) { return; }
                                 console.log('document found' + doc);
-                                if (doc.isLost) {
-                                    console.log('doc was reported as lost.');
-                                    console.log('the user binded to the user is' + doc.user);
-                                    console.log('the user id is ' + doc.user._id);
-                                    User.findOne({ '_id': doc.user._id}, function (err, alterUser) { 
-                                        console.log("Alter user: " + alterUser);
-                                        console.log("Alter user email: " + alterUser.email);
-                                        notifyFoundDocument(alterUser.email);
-                                    });
-                                }
+                              if (doc.isLost)  {
+                                console.log('doc was reported as lost.');
+                              } else {
+                                console.log('doc was reported found');
+                              }
+                                
+                                console.log('the user binded to the user is' + doc.user);
+                                console.log('the user id is ' + doc.user._id);
+                                User.findOne({ '_id': doc.user._id}, function (err, alterUser) { 
+                                console.log("Alter user: " + alterUser);
+                                console.log("Alter user email: " + alterUser.email);
+                                notifyFoundDocument(alterUser.email);
+                                });
+                                
     });
 
     res.redirect(util.format('/users/%s/documents', user._id));
