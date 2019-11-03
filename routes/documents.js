@@ -65,8 +65,12 @@ router.post('/:id/documents', auth ,async (req, res) => {
                 //if there is a match, notify
                 if (doc.isLost) {
                     console.log('doc was reported as lost.');
-                    console.log(doc.user.email);
-                    notifyFoundDocument(doc.user.email);
+
+                    console.log(doc.user);
+                    const alterUser = User.findById(doc.user);
+                    console.log(alterUser);
+                    console.log(alterUser.email);
+                    notifyFoundDocument(alterUser.email);
                 } else {
                     console.log('doc was reported as found.');
                 }
@@ -79,6 +83,11 @@ router.post('/:id/documents', auth ,async (req, res) => {
 });
 
 function notifyFoundDocument(usermail){
+
+    console.log('usermail '+usermail);
+    if (usermail == undefined) {
+        return;
+    }
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       sendmail: true,
