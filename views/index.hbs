@@ -1,0 +1,30 @@
+<div class="container">      
+    <div class="row">
+    <br>
+   <!-- <form  action="/users/{{this.user._id}}/documents/"  method="GET" > 
+        <button type="submit" class="btn btn-primary">New</button>
+    </form>-->
+  
+    <td><a href="/documental" class="btn btn-primary">New</a></td> 
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Document type</th>
+            <th>Document Number</th>
+            <th>Action</th>
+            <th colspan="2">Operation</th>
+        </tr>
+        </thead>
+        {{#each documents}}
+          <tr>
+            <td>{{this.documentType}}</td> 
+            <td>{{this.documentNumber}}</td>
+            <td>{{this.isLost}}</td>
+            <td><a href="/:id/documents/{{this._id}}">Change</a></td> 
+            <td><a href="/users/{{this.user._id}}/documents/{{this._id}}">Delete</a></td>
+          </td> 
+          </tr>          
+       {{/each}}   
+      </table>
+    </div>
+</div>

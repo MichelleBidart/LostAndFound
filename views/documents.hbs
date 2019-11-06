@@ -1,0 +1,27 @@
+<div class="container">
+    <br />
+    <!-- Importante indicar el path donde se encuentra el metodo POST -->
+    <form action="/users/{{id}}/documents" method="POST">
+        <div class="form-group">
+            <label for="documentNumber">Document number:</label>
+            <input type="text" class="form-control" id="documentNumber" name="documentNumber" minlength="5" maxlength="12" />
+        </div>
+        <div class="form-group" >
+            <label for="documentType"> Document type: </label>
+            <select class="form-control" name="documentType">
+                <option value="DNI">DNI</option>
+                <option value="PASAPORTE">PASAPORTE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="lostOrFound">Lost or found: </label>
+            <select class="form-control" name="lostOrFound">
+                <option value="LOST">Lost</option>
+                <option value="FOUND">Found</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+
