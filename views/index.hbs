@@ -29,7 +29,11 @@
               <input type="hidden" name="_method" value="put" />
               <button type="submit" class="btn btn-link">Change</button>
             </form></td>
-            <td><a href="/users/{{this.user._id}}/documents/{{this._id}}">Delete</a></td>
+              <td><form method="post" action="/users/{{this.user._id}}/documents/{{this._id}}?_method=DELETE">
+              <input type="hidden" name="_method" value="DELETE" />
+              <button type="submit" class="btn btn-link">Delete</button>
+            </form></td>
+           <!-- <td><a href="/users/{{this.user._id}}/documents/{{this._id}}">Delete</a></td>-->
           </tr>          
        {{/each}}   
       </table>
