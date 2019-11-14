@@ -12,5 +12,6 @@ npm install
 
 4) iniciar proyecto de forma local
 
+$node app.js
 localhost:3000
 
