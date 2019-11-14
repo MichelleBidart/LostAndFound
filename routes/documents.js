@@ -26,9 +26,7 @@ router.get('/:id/documents', auth ,async (req, res) => {
                     );
 });
 
-router.put('/:userId/documents/:documentId', auth ,async (req, res) => {
-
-  
+router.get('/:userId/documents/:documentId', auth ,async (req, res) => {
   const user = await User.findById(req.params.userId);
   if (!user) res.status(404).send('You dont have any document to update');
 
@@ -39,12 +37,53 @@ router.put('/:userId/documents/:documentId', auth ,async (req, res) => {
 
   console.log(document);
 
-  res.render('documents', {document: document});
+  res.render('documents', {document: document,
+                          id : user._id,
+                          isPut: true
+                          });
+});
+
+router.put('/:userId/documents/:documentId', auth ,async (req, res) => {
+  const user = await User.findById(req.params.userId);
+  if (!user) res.status(404).send('You dont have any document to update');
+
+  console.log('update document user id' + req.params.documentId);
+
+  /*const document = await Document.findById(req.params.documentId)
+  .catch(err => console.error("err", err));*/
+
+  let documentToUpdate = new Document ({
+    documentNumber: req.body.documentNumber,
+    user : req.params.id,
+    isLost: req.body.lostOrFound == 'LOST',
+    date: req.body.date,
+    documentType: req.body.documentType        
+});
+  console.log(documentToUpdate);
+
+  
+     await Document.updateOne(
+      { _id: req.params.documentId },  // <-- find stage
+      { $set: {                // <-- set stage
+         id: req.params.documentId,     // <-- id not _id
+         documentNumber: req.body.documentNumber,
+         user : req.params.id,
+         isLost: req.body.lostOrFound == 'LOST',
+         date: req.body.date,
+         documentType: req.body.documentType 
+        } 
+      }   
+    ).catch(err => console.error("err", err));
+  
+
+  /*const document = await Document.findByIdAndUpdate(req.params.documentId, documentToUpdate, useFindAndModify = false)
+  .catch(err => console.error("err", err));*/
+
+  res.redirect(util.format('/users/%s/documents', user._id));
+
 });
 
 router.delete('/:userId/documents/:documentId', auth ,async (req, res) => {
-
-    console.log('entraaaaa');
   
     const user = await User.findById(req.params.userId);
     if (!user) res.status(404).send('You dont have any document for this user to delete');

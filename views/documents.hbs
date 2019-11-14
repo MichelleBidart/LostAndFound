@@ -1,8 +1,13 @@
 <div class="container">
     <br />
     <!-- Importante indicar el path donde se encuentra el metodo POST -->
-     
-    <form action="/users/{{id}}/documents" method="POST">
+        {{#if this.isPut}}
+                 <form method="POST" action="/users/{{id}}/documents/{{document._id}}?_method=PUT">
+                <input type="hidden" name="_method" value="put" />
+            {{else}}
+                <form action="/users/{{id}}/documents" method="POST">
+            {{/if}}
+
         <div class="form-group">
             <label for="documentNumber">Document number:</label>
             <input type="text" class="form-control" id="documentNumber" name="documentNumber" minlength="5" 

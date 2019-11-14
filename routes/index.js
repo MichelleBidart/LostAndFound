@@ -47,7 +47,7 @@ if (!config.get('jwtKey')) {
 
 //added this to avoid message errors in start up
 mongoose.set('useCreateIndex', true);
-
+mongoose.set('useFindAndModify', false);
 /** I use promisses to conncet to the DB, if it´s fullfil then I´m connected, if not 
 I cath the exception. 
 **/

@@ -1,10 +1,6 @@
 <div class="container">      
     <div class="row">
-    <br>
-   <!-- <form  action="/users/{{this.user._id}}/documents/"  method="GET" > 
-        <button type="submit" class="btn btn-primary">New</button>
-    </form>-->
-  
+    <br>  
     <td><a href="/documental" class="btn btn-primary">New</a></td> 
     <table class="table table-striped">
         <thead>
@@ -24,11 +20,7 @@
             {{else}}
             <td>Found</td>
             {{/if}}
-            <!--<td><a href="/:id/documents/{{this._id}}">Change</a></td>--> 
-            <td><form method="post" action="/users/{{this.user._id}}/documents/{{this._id}}?_method=PUT">
-              <input type="hidden" name="_method" value="put" />
-              <button type="submit" class="btn btn-link">Change</button>
-            </form></td>
+              <td><a href="/users/{{this.user._id}}/documents/{{this._id}}">Change</a></td> 
               <td><form method="post" action="/users/{{this.user._id}}/documents/{{this._id}}?_method=DELETE">
               <input type="hidden" name="_method" value="DELETE" />
               <button type="submit" class="btn btn-link">Delete</button>
