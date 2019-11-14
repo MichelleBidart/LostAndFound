@@ -67,20 +67,13 @@ router.put('/:userId/documents/:documentId', auth ,async (req, res) => {
       { $set: {                // <-- set stage
          id: req.params.documentId,     // <-- id not _id
          documentNumber: req.body.documentNumber,
-         user : req.params.id,
          isLost: req.body.lostOrFound == 'LOST',
-         date: req.body.date,
          documentType: req.body.documentType 
         } 
       }   
     ).catch(err => console.error("err", err));
   
-
-  /*const document = await Document.findByIdAndUpdate(req.params.documentId, documentToUpdate, useFindAndModify = false)
-  .catch(err => console.error("err", err));*/
-
   res.redirect(util.format('/users/%s/documents', user._id));
-
 });
 
 router.delete('/:userId/documents/:documentId', auth ,async (req, res) => {
