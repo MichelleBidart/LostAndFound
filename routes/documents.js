@@ -18,12 +18,18 @@ router.get('/:id/documents', auth ,async (req, res) => {
 
     //document = await Document.find('user:user')
     documents = await Document.find({user:user}).populate('user');
+
+    console.log(documents);
    // res.send(document);
    res.render('index', {
                             documents:documents,
                             user:user
                         }
                     );
+});
+
+router.put('/:userId/documents/:documentId', auth ,async (req, res) => {
+     console.log("prueba");
 });
 
 router.get('/:userId/documents/:documentId', auth ,async (req, res) => {

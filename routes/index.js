@@ -9,6 +9,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const middlewareAuth = require('../middleware/auth');
+const methodOverride = require('method-override');
+
 const util = require('util');
 //middleware 
 //understands json
@@ -16,7 +18,10 @@ router.use(express.json());
 //to parse a body from a form. If we don´t use this, express doesn´t send the data in the body  
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
+//accept static content
 router.use(express.static(path.join(__dirname, 'public')));
+//use this to accept put and delete method
+router.use(methodOverride('_method'));
 
 
 //middleware for routes
@@ -28,8 +33,6 @@ router.use('/',auth);//login
 router.get('/register', (req,res) => {
     res.render('register');
 });
-
-
 
 //show the create list
 router.get('/documental', middlewareAuth,  (req,res) => {

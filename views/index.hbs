@@ -12,17 +12,24 @@
             <th>Document type</th>
             <th>Document Number</th>
             <th>Action</th>
-            <th colspan="2">Operation</th>
+            <th colspan="2">Operations</th>
         </tr>
         </thead>
         {{#each documents}}
           <tr>
             <td>{{this.documentType}}</td> 
             <td>{{this.documentNumber}}</td>
-            <td>{{this.isLost}}</td>
-            <td><a href="/:id/documents/{{this._id}}">Change</a></td> 
+            {{#if this.isLost}}
+            <td>Lost</td>
+            {{else}}
+            <td>Found</td>
+            {{/if}}
+            <!--<td><a href="/:id/documents/{{this._id}}">Change</a></td>--> 
+            <td><form method="post" action="/users/{{this.user._id}}/documents/{{this._id}}?_method=PUT">
+              <input type="hidden" name="_method" value="put" />
+              <button type="submit" class="btn btn-link">Change</button>
+            </form></td>
             <td><a href="/users/{{this.user._id}}/documents/{{this._id}}">Delete</a></td>
-          </td> 
           </tr>          
        {{/each}}   
       </table>
