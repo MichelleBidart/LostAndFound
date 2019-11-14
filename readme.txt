@@ -8,10 +8,13 @@ https://www.mongodb.com/download-center/community
 
 3)Bajarse las dependencias
 
-npm install
+$npm install
 
 4) iniciar proyecto de forma local
 
 $node app.js
-localhost:3000
+ir al navegador 
+
+de forma local localhost:3000
+deployado en https://lostandfound.localtunnel.me
 
