@@ -134,6 +134,8 @@ router.post('/:id/documents', auth ,async (req, res) => {
 function notifyFoundDocument(destinationEmail, alterEmail){
     if (!destinationEmail) { return; }
 
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
       var htmlBody = '<p><b>Hola!</b></p>' +
       '<p>Tu documento fue encontrado!</p>' +
       '<p>Podés enviar un mail a %s para recuperarlo. </p>'
@@ -141,6 +143,7 @@ function notifyFoundDocument(destinationEmail, alterEmail){
       const send = require('gmail-send')({
         user: 'lost.and.found.up@gmail.com',
         pass: 'Gorriti3758',
+        secure: false, 
         to:   destinationEmail,
         subject: 'Tu documento fue encontrado',
       });
