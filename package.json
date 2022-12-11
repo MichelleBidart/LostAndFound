@@ -8,7 +8,7 @@
     "body-parser": "^1.19.0",
     "config": "^3.2.3",
     "cookie-parser": "^1.4.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "gmail-send": "^1.8.10",
     "hbs": "^4.0.6",
     "helmet": "^3.21.0",
